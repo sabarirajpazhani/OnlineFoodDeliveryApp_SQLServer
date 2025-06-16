@@ -229,3 +229,11 @@ inner join MenuItems m on o.MenuItemID = m.MenuItemID
 inner join Restaurants r on m.RestaurantID = r.RestaurantID
 inner join Foods f on m.FoodID = f.FoodID
 
+--2. Display names of customers who have ordered "Paneer Butter Masala".
+select c.CustomerName from OrderItems oi
+inner join Orders o on oi.OrderID = o.OrderID
+inner join Customers c on o.CustomerID = c.CustomerID
+inner join MenuItems m on oi.MenuItemID = m.MenuItemID
+inner join Foods f on m.FoodID = f.FoodID
+where f.FoodName = 'Paneer Butter Masala'
+group by c.CustomerName;
