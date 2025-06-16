@@ -262,4 +262,8 @@ inner join Orders o on oi.OrderID = o.OrderID
 inner join Customers c on o.CustomerID = c.CustomerID
 group by c.CustomerName;
 
-
+--7. Show total revenue generated per restaurant.
+select r.RestaurantName , sum(oi.SubPrice) from OrderItems oi
+inner join MenuItems m on oi.MenuItemID = m.MenuItemID
+inner join Restaurants r on m.RestaurantID = r.RestaurantID 
+group by r.RestaurantName;
