@@ -243,3 +243,7 @@ select da.DeliveryAgentName , Count(*) as NumberOfDelivery from Delivery d
 inner join DeliveryAgent da on d.DeliveryAgentID = da.DeliveryAgentID
 group by da.DeliveryAgentName
 having count(*) > 1;
+
+--4.  List orders where the total amount is greater than ₹500.
+select * from Orders
+where TotalAmount > 500;
