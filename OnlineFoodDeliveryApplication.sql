@@ -293,3 +293,17 @@ select top 1 c.CustomerName, Sum(o.TotalAmount) as HighestAmount from Orders o
 inner join Customers c on o.CustomerID = c.CustomerID 
 group by c.CustomerName
 order by HighestAmount desc;
+
+--Views, Functions, Procedures (12–15)
+-- 12. Create a view vw_OrderSummary to show: OrderID, CustomerName, TotalAmount, OrderDate, PaymentStatus
+create view vw_OrderSummary
+as
+	select o.OrderID, c.CustomerName, o.TotalAmount, o.OrderedDate, ps.Status
+	from Orders o
+	inner join Customers c on c.CustomerID = o.CustomerID
+	inner join Payment p on o.OrderID = p.OrderID
+	inner join PaymentStatus ps on p.PaymentStatusID = ps.PaymentStatusID
+
+select * from vw_OrderSummary ;
+
+ 
