@@ -247,3 +247,10 @@ having count(*) > 1;
 --4.  List orders where the total amount is greater than ₹500.
 select * from Orders
 where TotalAmount > 500;
+
+--5.Display orders placed from more than one restaurant.
+select o.OrderID, Count(m.RestaurantID) as NumberOfRestaurant from OrderItems oi
+inner join Orders o on oi.OrderID = o.OrderID
+inner join MenuItems m on oi.MenuItemID = m.MenuItemID
+group by o.OrderID 
+Having count(m.RestaurantID) > 1;
