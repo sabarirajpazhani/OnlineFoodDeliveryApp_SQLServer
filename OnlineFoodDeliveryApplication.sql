@@ -288,3 +288,8 @@ inner join Foods f on m.FoodID = f.FoodID
 group by f.FoodName 
 order by NumberOfOrder desc;
 
+--11. List customers who made the highest total payment.
+select top 1 c.CustomerName, Sum(o.TotalAmount) as HighestAmount from Orders o
+inner join Customers c on o.CustomerID = c.CustomerID 
+group by c.CustomerName
+order by HighestAmount desc;
