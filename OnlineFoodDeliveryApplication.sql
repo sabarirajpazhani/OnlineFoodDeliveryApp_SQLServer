@@ -237,3 +237,9 @@ inner join MenuItems m on oi.MenuItemID = m.MenuItemID
 inner join Foods f on m.FoodID = f.FoodID
 where f.FoodName = 'Paneer Butter Masala'
 group by c.CustomerName;
+
+--3. Show delivery agents who handled more than 3 deliveries.
+select da.DeliveryAgentName , Count(*) as NumberOfDelivery from Delivery d
+inner join DeliveryAgent da on d.DeliveryAgentID = da.DeliveryAgentID
+group by da.DeliveryAgentName
+having count(*) > 1;
