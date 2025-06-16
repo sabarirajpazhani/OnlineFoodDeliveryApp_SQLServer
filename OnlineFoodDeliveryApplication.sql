@@ -306,4 +306,20 @@ as
 
 select * from vw_OrderSummary ;
 
- 
+--13. Write a scalar function that takes @RestaurantID and returns total orders placed for that restaurant.
+alter function GetTotalOrders(
+	@RestaurantID int
+)
+returns int
+as
+begin
+	declare @TotalOrder int
+	select @TotalOrder = count(oi.MenuItemID) from OrderItems oi
+	inner join MenuItems m  on oi.MenuItemID = m.MenuItemID
+	where m.RestaurantID = @RestaurantID
+
+
+	return @TotalOrder;
+end;
+
+select dbo.GetTotalOrders (201);
