@@ -221,3 +221,11 @@ SELECT * FROM DeliveryAgent;
 SELECT * FROM DeliveryStatus;
 SELECT * FROM Delivery;
 
+--1. Write a query to display: CustomerName, RestaurantName, FoodName, Quantity, SubPrice for all orders.
+select c.CustomerName, r.RestaurantName, f.FoodName, o.Quantity, o.SubPrice from OrderItems o
+inner join Orders os on o.OrderID = os.OrderID
+inner join Customers c on os.CustomerID = c.CustomerID
+inner join MenuItems m on o.MenuItemID = m.MenuItemID
+inner join Restaurants r on m.RestaurantID = r.RestaurantID
+inner join Foods f on m.FoodID = f.FoodID
+
