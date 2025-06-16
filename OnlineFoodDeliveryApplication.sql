@@ -323,3 +323,17 @@ begin
 end;
 
 select dbo.GetTotalOrders (201);
+
+--14. Create a stored procedure sp_AssignDeliveryAgent that takes @OrderItemsID, @AgentID and inserts a new delivery.
+alter procedure sp_AssignDeliveryAgent 
+	@OrderItemsID int, 
+	@DeliveryAgentID int
+as
+begin
+	declare @DeliveryID int
+	select @DeliveryID = max(DeliveryID)+1 from Delivery
+	insert into Delivery values
+	(@DeliveryID, @DeliveryAgentID, @OrderItemsID, 1, getdate(), cast(getdate() as time))
+end;
+
+exec sp_AssignDeliveryAgent 606 , 802
