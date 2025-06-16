@@ -274,3 +274,9 @@ inner join DeliveryAgent da on d.DeliveryAgentID = da.DeliveryAgentID
 inner join OrderItems oi on d.OrderItemsID = oi.OrderItemsID
 inner join Orders o on oi.OrderID = o.OrderID
 group by da.DeliveryAgentName;
+
+
+--Subqueries & Filtering
+--9. Find customers who have never placed an order.
+select c.CustomerName from Customers c
+where c.CustomerID not in (select CustomerID from Orders)
