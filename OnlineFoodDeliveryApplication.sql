@@ -254,3 +254,12 @@ inner join Orders o on oi.OrderID = o.OrderID
 inner join MenuItems m on oi.MenuItemID = m.MenuItemID
 group by o.OrderID 
 Having count(m.RestaurantID) > 1;
+
+--Aggregation & Grouping 
+-- 6. Show total number of items ordered per customer.
+select c.CustomerName , sum(oi.Quantity) as NumberOfItems from OrderItems oi
+inner join Orders o on oi.OrderID = o.OrderID
+inner join Customers c on o.CustomerID = c.CustomerID
+group by c.CustomerName;
+
+
