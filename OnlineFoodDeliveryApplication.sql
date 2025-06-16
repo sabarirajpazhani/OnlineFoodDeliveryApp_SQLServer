@@ -267,3 +267,10 @@ select r.RestaurantName , sum(oi.SubPrice) from OrderItems oi
 inner join MenuItems m on oi.MenuItemID = m.MenuItemID
 inner join Restaurants r on m.RestaurantID = r.RestaurantID 
 group by r.RestaurantName;
+
+--8. Show average delivery time per delivery agent.
+select da.DeliveryAgentName , avg(DATEDIFF(MINUTE, '18:30:00', d.DeliveryTime)) from Delivery d
+inner join DeliveryAgent da on d.DeliveryAgentID = da.DeliveryAgentID
+inner join OrderItems oi on d.OrderItemsID = oi.OrderItemsID
+inner join Orders o on oi.OrderID = o.OrderID
+group by da.DeliveryAgentName;
