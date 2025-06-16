@@ -280,3 +280,11 @@ group by da.DeliveryAgentName;
 --9. Find customers who have never placed an order.
 select c.CustomerName from Customers c
 where c.CustomerID not in (select CustomerID from Orders)
+
+--10. Display the most ordered food item by quantity.
+select top 1 f.FoodName, sum(oi.Quantity) NumberOfOrder from OrderItems oi
+inner join MenuItems m on oi.MenuItemID = m.MenuItemID
+inner join Foods f on m.FoodID = f.FoodID
+group by f.FoodName 
+order by NumberOfOrder desc;
+
