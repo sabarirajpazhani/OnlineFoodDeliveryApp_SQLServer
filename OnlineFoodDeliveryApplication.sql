@@ -413,3 +413,7 @@ create type PhoneType from varchar(30);
 --19. Create a non-clustered index on RestaurantName in Restaurants, include Phone.
 create nonclustered index ix_RestaurantName on Restaurants(RestaurantName) include (Phone);
 
+--Business Rule Logic (20)
+--20. Add a unique constraint so that a customer can only give one feedback per restaurant.
+alter table RestaurantFeedback 
+add constraint uq_RestaurantFeedback unique(CustomerID, RestaurantID);
