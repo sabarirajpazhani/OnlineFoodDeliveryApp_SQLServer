@@ -368,5 +368,24 @@ begin
 end;
 
 insert into OrderItems values (607, 503, 401, 2, 180);
-delete from OrderItems 
-where OrderItemsID = 607
+
+-- Triggers & Constraints (16–17)
+-- 16. Write a trigger to prevent placing an order if TotalAmount is less than ₹100.
+alter trigger tr_PreventPlacing
+on Orders
+instead of insert
+as
+begin
+	if exists (select 1 from inserted where TotalAmount < 100)
+	begin
+		raiserror('Order Amount must be atleat 100',16,1)
+		rollback
+	end
+	else
+	begin
+		insert into Orders (OrderID, CustomerID,OrderedDate, TotalAmount)
+		select * from inserted
+	end
+end;
+
+insert into Orders values (504, 103, getdate() , 99)
