@@ -23,7 +23,7 @@ CREATE TABLE Customers (
   CustomerID INT PRIMARY KEY,
   CustomerName VARCHAR(100),
   CustomerEmail VARCHAR(100),
-  CustomerPhone VARCHAR(15),
+  CustomerPhone PhoneType,
   AddressID INT FOREIGN KEY REFERENCES Addresses(AddressID)
 );
 
@@ -405,3 +405,7 @@ select * from Delivery;
 
 insert into Delivery (DeliveryID, DeliveryAgentID, OrderItemsID, DeliveryDate, DeliveryTime)
 values(905, 802, 607, cast(getdate() as date), cast(getdate() as time));
+
+--UDDTs & Indexes 
+--18. Create a user-defined data type PhoneType as VARCHAR(15) and apply it to CustomerPhone.
+create type PhoneType from varchar(30);
