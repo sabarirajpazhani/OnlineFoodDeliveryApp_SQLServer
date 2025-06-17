@@ -409,3 +409,7 @@ values(905, 802, 607, cast(getdate() as date), cast(getdate() as time));
 --UDDTs & Indexes 
 --18. Create a user-defined data type PhoneType as VARCHAR(15) and apply it to CustomerPhone.
 create type PhoneType from varchar(30);
+
+--19. Create a non-clustered index on RestaurantName in Restaurants, include Phone.
+create nonclustered index ix_RestaurantName on Restaurants(RestaurantName) include (Phone);
+
