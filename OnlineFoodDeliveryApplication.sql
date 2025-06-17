@@ -307,7 +307,7 @@ as
 select * from vw_OrderSummary ;
 
 --13. Write a scalar function that takes @RestaurantID and returns total orders placed for that restaurant.
-alter function GetTotalOrders(
+create function GetTotalOrders(
 	@RestaurantID int
 )
 returns int
@@ -325,7 +325,7 @@ end;
 select dbo.GetTotalOrders (201);
 
 --14. Create a stored procedure sp_AssignDeliveryAgent that takes @OrderItemsID, @AgentID and inserts a new delivery.
-alter procedure sp_AssignDeliveryAgent 
+create procedure sp_AssignDeliveryAgent 
 	@OrderItemsID int, 
 	@DeliveryAgentID int
 as
@@ -337,3 +337,36 @@ begin
 end;
 
 exec sp_AssignDeliveryAgent 606 , 802
+
+--15. Write a stored procedure sp_NewOrder to insert a new order into Orders table.
+create procedure sp_NewOrder
+	@CustomerID int
+as
+begin
+	declare @OrderID int, @TotalAmount decimal(10,2)
+	select @OrderID = max(OrderID) + 1 from Orders
+	set @TotalAmount = 0
+	insert into Orders values 
+	(@OrderID, @CustomerID, getdate(), @TotalAmount)
+end;
+
+exec sp_NewOrder 102 ;
+select * from Orders;
+select * from OrderItems;
+
+create trigger tr_NewOrderItems
+on OrderItems
+after insert
+as
+begin
+	declare @OrderID int, @TotalAmount decimal(10,2)
+	select @OrderID = OrderID, @TotalAmount = Quantity*SubPrice from inserted
+
+	update Orders
+	set TotalAmount = TotalAmount + @TotalAmount
+	where OrderID = @OrderID
+end;
+
+insert into OrderItems values (607, 503, 401, 2, 180);
+delete from OrderItems 
+where OrderItemsID = 607
