@@ -389,3 +389,19 @@ begin
 end;
 
 insert into Orders values (504, 103, getdate() , 99)
+
+--17. Write a trigger to update DeliveryStatus to 'Dispatched' automatically when a delivery is inserted.
+create trigger tr_DispacthedDelivery
+on Delivery
+after insert
+as
+begin
+	update Delivery
+	set DeliveryStatusID = 2
+	where DeliveryID = (select DeliveryID from inserted)
+end;
+
+select * from Delivery;
+
+insert into Delivery (DeliveryID, DeliveryAgentID, OrderItemsID, DeliveryDate, DeliveryTime)
+values(905, 802, 607, cast(getdate() as date), cast(getdate() as time));
